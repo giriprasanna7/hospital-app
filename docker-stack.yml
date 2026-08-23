@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - hospital-network
+
+  backend:
+    image: gi777/hospital-backend:v4
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/hospitaldb
+      PORT: 5000
+    depends_on:
+      - mongo
+    networks:
+      - hospital-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  frontend:
+    image: gi777/hospital-frontend:v2
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - hospital-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  hospital-network:
+    driver: overlay
+
+volumes:
+  mongo_data:
