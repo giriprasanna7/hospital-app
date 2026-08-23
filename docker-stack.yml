@@ -1,5 +1,7 @@
 version: "3.8"
+
 services:
+
   mongo:
     image: mongo:7
     volumes:
@@ -8,14 +10,12 @@ services:
       - hospital-network
 
   backend:
-    image: gi777/hospital-backend:v4
+    image: gi777/hospital-backend:latest
     ports:
-      - "5000:5000"
+      - "7000:7000"
     environment:
       MONGO_URI: mongodb://mongo:27017/hospitaldb
-      PORT: 5000
-    depends_on:
-      - mongo
+      PORT: 7000
     networks:
       - hospital-network
     deploy:
@@ -24,11 +24,9 @@ services:
         condition: on-failure
 
   frontend:
-    image: gi777/hospital-frontend:v2
+    image: gi777/hospital-frontend:latest
     ports:
-      - "3000:80"
-    depends_on:
-      - backend
+      - "6000:80"
     networks:
       - hospital-network
     deploy:
