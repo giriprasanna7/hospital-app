@@ -26,7 +26,7 @@ services:
   frontend:
     image: gi777/hospital-frontend:latest
     ports:
-      - "6000:80"
+      - "6001:80"
     networks:
       - hospital-network
     deploy:
