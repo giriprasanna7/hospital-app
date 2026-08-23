@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-const API = `http://${window.location.hostname}:5000/api`;
+const API = `http://${window.location.hostname}:7000/api`;
 
 function App() {
   const [patients, setPatients] = useState([]);
